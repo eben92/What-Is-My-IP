@@ -1,21 +1,35 @@
 import { NextResponse } from "next/server";
 
-async function getUserIp() {
-  const res = await fetch("https://ipapi.co/json/", {
+async function getUserIp(req: Request) {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+
+  const xForwardedFor = req.headers.get("x-forwarded-for");
+  if (xForwardedFor) {
+    headers.append("x-forwarded-for", xForwardedFor);
+  }
+
+  const xRealIp = req.headers.get("x-real-ip");
+  if (xRealIp) {
+    headers.append("x-real-ip", xRealIp);
+  }
+
+  const response = await fetch("https://ipapi.co/json/", {
     cache: "no-store",
+    headers,
   });
 
-  if (!res.ok) {
-    throw new Error("Error getting user ip");
+  if (!response.ok) {
+    throw new Error("Error getting user IP");
   }
-  const data = await res.json();
 
+  const data = await response.json();
   return data;
 }
 
 export async function GET(request: Request) {
   try {
-    const userIP = await getUserIp();
+    const userIP = await getUserIp(request);
 
     return NextResponse.json(
       {
