@@ -1,28 +1,33 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import { headers } from "next/headers";
 
 async function getUserIp(req: Request) {
-  const headers = {
-    "Content-Type": "application/json",
-  } as any;
+  // const headers = {
+  //   "Content-Type": "application/json",
+  // } as any;
 
-  const xForwardedFor = req.headers.get("x-forwarded-for");
-  if (xForwardedFor) {
-    headers["x-forwarded-for"] = xForwardedFor;
-  }
+  // const xForwardedFor = req.headers.get("x-forwarded-for");
+  // if (xForwardedFor) {
+  //   headers["x-forwarded-for"] = xForwardedFor;
+  // }
 
-  const xRealIp = req.headers.get("x-real-ip");
-  if (xRealIp) {
-    headers["x-real-ip"] = xRealIp;
-  }
+  // const xRealIp = req.headers.get("x-real-ip");
+  // if (xRealIp) {
+  //   headers["x-real-ip"] = xRealIp;
+  // }
 
   const response = await axios.get("https://ipapi.co/json/", {
-    headers: headers,
+    // headers: headers,
   });
   return { ...response.data, __headers: headers };
 }
 
 export async function GET(request: Request) {
+  const headersList = headers();
+
+  const hee = Object.entries(headersList.entries());
+
   try {
     const userIP = await getUserIp(request);
 
@@ -30,7 +35,7 @@ export async function GET(request: Request) {
       {
         msg: "success",
         result: { ...userIP },
-        headers: Object.fromEntries(request.headers.entries()),
+        headers: hee,
       },
       {
         status: 200,
