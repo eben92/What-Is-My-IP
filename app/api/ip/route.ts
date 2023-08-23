@@ -1,18 +1,25 @@
 import { NextResponse } from "next/server";
-// import  superagent ("superagent");
 import axios from "axios";
 
 async function getUserIp(req: Request) {
-  // const response = await fetch("https://ipapi.co/json/");
+  const headers = {
+    "Content-Type": "application/json",
+  } as any;
 
-  // if (!response.ok) {
-  //   throw new Error("Error getting user IP");
-  // }
+  const xForwardedFor = req.headers.get("x-forwarded-for");
+  if (xForwardedFor) {
+    headers["x-forwarded-for"] = xForwardedFor;
+  }
 
-  // const data = await response.json();
-  // return data;
-  const response = await axios.get("https://ipapi.co/json/");
-  return response.data;
+  const xRealIp = req.headers.get("x-real-ip");
+  if (xRealIp) {
+    headers["x-real-ip"] = xRealIp;
+  }
+
+  const response = await axios.get("https://ipapi.co/json/", {
+    headers: headers,
+  });
+  return { ...response.data, __headers: headers };
 }
 
 export async function GET(request: Request) {
