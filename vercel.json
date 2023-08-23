@@ -1,0 +1,11 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Forwarded-For", "value": "$x-forwarded-for" },
+        { "key": "X-Real-IP", "value": "$x-real-ip" }
+      ]
+    }
+  ]
+}
