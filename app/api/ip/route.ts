@@ -23,7 +23,7 @@ async function getUserIp(req: Request) {
   return { ...response.data, __headers: headers };
 }
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   const headersList = headers();
 
   const hee = Object.entries(headersList.entries());
