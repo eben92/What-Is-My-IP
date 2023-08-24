@@ -6,8 +6,6 @@ async function getUserIp(req: Request) {
   const ip =
     req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "";
 
-  const headers = Object.fromEntries(req.headers.entries());
-
   const response = await axios.get(`https://ipapi.co/${ip}/json/`);
   return response.data;
 }
