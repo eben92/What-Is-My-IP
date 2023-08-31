@@ -23,6 +23,7 @@ export default async function Home() {
   const theme = cookieStore.get("hello")?.value;
   const data = await getUserIp();
 
+  console.log(data?.geo);
   return (
     <pre className="">
       {data?.country_name}
@@ -38,6 +39,9 @@ export default async function Home() {
       <br />
 
       {theme}
+
+      <br />
+      {JSON.stringify(data?.geo)}
     </pre>
   );
 }

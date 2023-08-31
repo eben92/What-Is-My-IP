@@ -1,9 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
-async function getUserIp(req: Request) {
+async function getUserIp(req: NextRequest) {
+  const geo = req.geo;
   const ip =
     req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "";
 
@@ -21,10 +22,10 @@ async function getUserIp(req: Request) {
   }
 
   const data = await res.json();
-  return data;
+  return { ...data, geo };
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const userIP = await getUserIp(request);
 
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
         country_code: userIP.country_code,
         currency:
           userIP.country_name?.toLowerCase() === "ghana" ? "GHS" : "USD",
+        geo: userIP.geo,
         headers: Object.fromEntries(request.headers.entries()),
       },
       {

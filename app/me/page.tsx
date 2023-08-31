@@ -15,10 +15,13 @@ async function getUserIp() {
 export default async function Home() {
   const res = await getUserIp();
 
+  console.log(res?.geo);
+
   return (
     <pre className="">
       {res?.country_name}
       <br />
+      {JSON.stringify(res?.geo)}
       <br />
       {res?.realIp}
     </pre>
