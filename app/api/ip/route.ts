@@ -31,6 +31,7 @@ export async function GET(request: Request) {
         country_code: userIP.country_code,
         currency:
           userIP.country_name?.toLowerCase() === "ghana" ? "GHS" : "USD",
+        headers: request.headers,
       },
       {
         status: 200,
