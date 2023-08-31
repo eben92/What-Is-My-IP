@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 
+// Add
 export const dynamic = "force-dynamic";
 
 const BASE_URL =

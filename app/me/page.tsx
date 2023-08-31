@@ -17,14 +17,10 @@ export default async function Home() {
 
   return (
     <pre className="">
-      {Object.entries(res).map(([key, value]) => {
-        return (
-          <div key={key}>
-            {/* @ts-ignore */}
-            {key}: {value}
-          </div>
-        );
-      })}
+      {res?.country_name}
+      <br />
+      <br />
+      {res?.realIp}
     </pre>
   );
 }
