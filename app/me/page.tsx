@@ -1,9 +1,14 @@
 import axios from "axios";
 
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://what-is-my-ip-murex.vercel.app"
+    : "http://localhost:3000";
+
 export const dynamic = "force-dynamic";
 
 async function getUserIp() {
-  const response = await axios.get("https://ipapi.co/json/", {});
+  const response = await axios.post(`${BASE_URL}/api/ip`);
   return response.data;
 }
 

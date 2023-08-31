@@ -9,6 +9,7 @@ const BASE_URL =
 
 async function getUserIp() {
   const response = await fetch(`${BASE_URL}/api/ip`, {
+    method: "POST",
     cache: "no-store",
   });
 

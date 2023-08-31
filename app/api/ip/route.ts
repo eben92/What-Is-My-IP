@@ -24,7 +24,7 @@ async function getUserIp(req: Request) {
   return data;
 }
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
     const userIP = await getUserIp(request);
 
