@@ -27,8 +27,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json(
       {
-        msg: "success",
-        result: { ...userIP },
+        country_name: userIP.country_name,
+        country_code: userIP.country_code,
+        currency:
+          userIP.country_name?.toLowerCase() === "ghana" ? "GHS" : "USD",
       },
       {
         status: 200,

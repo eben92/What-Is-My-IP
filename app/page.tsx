@@ -1,19 +1,27 @@
-"use client";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://what-is-my-ip-murex.vercel.app"
+    : "http://localhost:3000";
 
-import axios from "axios";
-import { useEffect, useState } from "react";
+async function getUserIp() {
+  const response = await fetch(`${BASE_URL}/api/ip`, {
+    cache: "no-store",
+  });
 
-export default function Home() {
-  const [res, setRes] = useState(null);
+  const data = await response.json();
+  return data;
+}
 
-  useEffect(() => {
-    getUserIp();
-  }, []);
+export const revalidate = 0;
 
-  async function getUserIp() {
-    const response = await axios.get("https://ipapi.co/json/");
-    setRes(response.data);
-  }
+export default async function Home() {
+  const data = await getUserIp();
 
-  return <pre className="">{JSON.stringify(res)}</pre>;
+  return (
+    <pre className="">
+      {data?.country_name}
+      {data?.currency}
+      {BASE_URL}
+    </pre>
+  );
 }
