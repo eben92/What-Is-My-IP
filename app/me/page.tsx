@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const dynamic = "force-dynamic";
+
 async function getUserIp() {
   const response = await axios.get("https://ipapi.co/json/", {});
   return response.data;
