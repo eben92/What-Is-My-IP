@@ -28,6 +28,13 @@ export async function GET(request: Request) {
   try {
     const userIP = await getUserIp(request);
 
+    const ip =
+      request.headers.get("x-real-ip") ||
+      request.headers.get("x-forwarded-for") ||
+      "";
+
+    cookies().set("hello", ip);
+
     return NextResponse.json(
       {
         realIp: request.headers.get("x-real-ip"),

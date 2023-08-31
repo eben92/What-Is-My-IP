@@ -18,7 +18,7 @@ async function getUserIp() {
 
 export default async function Home() {
   const cookieStore = cookies();
-  const theme = cookieStore.get("secure-ip");
+  const theme = cookieStore.get("hello");
   const data = await getUserIp();
 
   return (
