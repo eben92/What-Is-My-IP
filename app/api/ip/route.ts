@@ -25,6 +25,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(
       {
+        realIp: request.headers.get("x-real-ip"),
         country_name: userIP.country_name,
         country_code: userIP.country_code,
         currency:

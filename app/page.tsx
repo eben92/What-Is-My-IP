@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 const BASE_URL =
   process.env.NODE_ENV === "production"
     ? "https://what-is-my-ip-murex.vercel.app"
@@ -12,15 +14,20 @@ async function getUserIp() {
   return data;
 }
 
-export const revalidate = 0;
-
 export default async function Home() {
   const data = await getUserIp();
 
   return (
     <pre className="">
       {data?.country_name}
+      <br />
+
       {data?.currency}
+
+      <br />
+      {data?.realIp}
+
+      <br />
       {BASE_URL}
     </pre>
   );
