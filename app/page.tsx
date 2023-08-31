@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 export const dynamic = "force-dynamic";
 
 const BASE_URL =
@@ -15,6 +17,8 @@ async function getUserIp() {
 }
 
 export default async function Home() {
+  const cookieStore = cookies();
+  const theme = cookieStore.get("secure-ip");
   const data = await getUserIp();
 
   return (
@@ -29,6 +33,9 @@ export default async function Home() {
 
       <br />
       {BASE_URL}
+      <br />
+
+      {theme}
     </pre>
   );
 }

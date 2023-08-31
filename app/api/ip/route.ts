@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+
+export const dynamic = "force-dynamic";
 
 async function getUserIp(req: Request) {
   const ip =
     req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "";
+
+  cookies().set("secure-ip", ip, { secure: true });
 
   const res = await fetch(`https://ipapi.co/${ip}/json/`, {
     headers: {
